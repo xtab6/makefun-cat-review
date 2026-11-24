@@ -2,6 +2,7 @@
 """Write the entry: one funny one-star cat review, one line, <200 chars."""
 
 import os
+import shutil
 
 ENTRY = (
     'One star. He moved my sunny spot three inches to the left and '
@@ -17,12 +18,7 @@ def main():
     for name in os.listdir(out_dir):
         path = os.path.join(out_dir, name)
         if os.path.isdir(path) and not os.path.islink(path):
-            for root, dirs, files in os.walk(path, topdown=False):
-                for f in files:
-                    os.unlink(os.path.join(root, f))
-                for d in dirs:
-                    os.rmdir(os.path.join(root, d))
-            os.rmdir(path)
+            shutil.rmtree(path)
         else:
             os.unlink(path)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
